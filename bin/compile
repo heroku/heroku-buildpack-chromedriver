@@ -22,7 +22,7 @@ BUILD_DIR=${1:-}
 CACHE_DIR=${2:-}
 ENV_DIR=${3:-}
 
-BIN_DIR=$BUILD_DIR/.heroku/chromedriver/bin
+BIN_DIR=$BUILD_DIR/.chromedriver/bin
 mkdir -p $BIN_DIR
 
 topic "Looking up latest chromedriver version"
