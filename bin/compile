@@ -39,5 +39,5 @@ rm -f $ZIP_LOCATION
 indent "Downloaded"
 
 topic "Creating chromedriver export scripts"
-echo "export PATH=\$PATH:$BIN_DIR" >> /app/.profile.d/chromedriver.sh
+echo "export PATH=\$PATH:/app/.chromedriver/bin" >> /app/.profile.d/chromedriver.sh
 indent "Created"
