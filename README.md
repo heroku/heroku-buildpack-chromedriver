@@ -11,3 +11,10 @@ This buildpack installs
    to run Chrome with the `--headless` flag
  - [heroku-buildpack-xvfb-google-chrome](https://github.com/heroku/heroku-buildpack-xvfb-google-chrome)
    to run Chrome against a virtual window server
+
+Due to limitations on Heroku, you may observe unpredictable behavior when
+using a screen size that is too large.  This can result in ambiguous error
+messages such as "chrome not reachable" or "session deleted because of page
+crash from tab crashed."  In the event you see either of these messages,
+try reducing your window size.  1200x800 has generally seemed safe for use
+on a free dyno.
