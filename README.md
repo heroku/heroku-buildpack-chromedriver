@@ -11,3 +11,12 @@ This buildpack installs
    to run Chrome with the `--headless` flag
  - [heroku-buildpack-xvfb-google-chrome](https://github.com/heroku/heroku-buildpack-xvfb-google-chrome)
    to run Chrome against a virtual window server
+
+
+## Configuring the downloaded version of chromedriver.
+
+By default, this buildpack will download the latest release, which is provided
+by [Google](https://chromedriver.storage.googleapis.com/LATEST_RELEASE).
+
+You can control the specific version by setting the `CHROMEDRIVER_VERSION`
+variable to an explicit version e.g. `2.39`.
