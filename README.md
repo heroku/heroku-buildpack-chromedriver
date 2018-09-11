@@ -20,3 +20,10 @@ by [Google](https://chromedriver.storage.googleapis.com/LATEST_RELEASE).
 
 You can control the specific version by setting the `CHROMEDRIVER_VERSION`
 variable to an explicit version e.g. `2.39`.
+
+
+## Releasing a new version
+
+Make sure you publish this buildpack in the buildpack registry
+
+`heroku buildpacks:publish heroku/chromedriver`
