@@ -26,4 +26,4 @@ variable to an explicit version e.g. `2.39`.
 
 Make sure you publish this buildpack in the buildpack registry
 
-`heroku buildpacks:publish heroku/chromedriver`
+`heroku buildpacks:publish heroku/chromedriver master`
