@@ -32,7 +32,7 @@ else
   LATEST="https://chromedriver.storage.googleapis.com/LATEST_RELEASE"
   VERSION=`curl -s $LATEST`
 fi
-indent "Version $VERSION"
+echo "Version $VERSION" | indent
 
 topic "Downloading chromedriver v$VERSION"
 ZIP_URL="https://chromedriver.storage.googleapis.com/$VERSION/chromedriver_linux64.zip"
@@ -40,9 +40,9 @@ ZIP_LOCATION="/tmp/chromedriver.zip"
 curl -s -o $ZIP_LOCATION $ZIP_URL
 unzip -o $ZIP_LOCATION -d $BIN_DIR
 rm -f $ZIP_LOCATION
-indent "Downloaded"
+echo "Downloaded" | indent
 
 topic "Creating chromedriver export scripts"
 mkdir -p $BUILD_DIR/.profile.d
 echo "export PATH=\$PATH:\$HOME/.chromedriver/bin" >> $BUILD_DIR/.profile.d/chromedriver.sh
-indent "Created"
+echo "Created" | indent
