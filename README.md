@@ -12,6 +12,12 @@ This buildpack installs
  - [heroku-buildpack-xvfb-google-chrome](https://github.com/heroku/heroku-buildpack-xvfb-google-chrome)
    to run Chrome against a virtual window server
 
+The `chromedriver` binary depends on Chrome. You need to put Chrome buildpack first in the order.
+
+e.g;
+
+1. https://github.com/heroku/heroku-buildpack-google-chrome.git
+2. https://github.com/heroku/heroku-buildpack-chromedriver.git
 
 ## Configuring the downloaded version of chromedriver.
 
