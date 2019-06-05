@@ -47,7 +47,7 @@ mkdir -p $BUILD_DIR/.profile.d
 echo "export PATH=\$PATH:\$HOME/.chromedriver/bin" >> $BUILD_DIR/.profile.d/chromedriver.sh
 indent "Created"
 
-if [ -x "$GOOGLE_CHROME_SHIM" ]; then
+if [ -x "$BUILD_DIR/.apt/usr/bin/google-chrome" ]; then
   topic "Validating chromedriver"
   rm $BUILD_DIR/.apt/usr/lib/x86_64-linux-gnu/libnss3.so
   $BIN_DIR/chromedriver --version | indent
