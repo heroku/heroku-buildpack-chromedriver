@@ -27,6 +27,13 @@ mkdir -p $BIN_DIR
 
 if [ -f $ENV_DIR/CHROMEDRIVER_VERSION ]; then
   VERSION=$(cat $ENV_DIR/CHROMEDRIVER_VERSION)
+elif [ ! -z $CHROME_VERSION ]; then
+  topic "$CHROME_VERSION is the version of Google Chrome installed by heroku-buildpack-google-chrome"
+  # There might be no same version chromedriver as $CHROME_VERSION exists.
+  # Using the version selection rules decribed in <http://chromedriver.chromium.org/downloads/version-selection> at here.
+  BUILD_VERSION=`echo $CHROME_VERSION | cut -d "." -f 1-3`
+  SUPPORTED="https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$BUILD_VERSION"
+  VERSION=`curl -s $SUPPORTED`
 else
   topic "Looking up latest chromedriver version"
   LATEST="https://chromedriver.storage.googleapis.com/LATEST_RELEASE"
