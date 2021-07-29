@@ -30,7 +30,7 @@ if [ -f $ENV_DIR/CHROMEDRIVER_VERSION ]; then
 else
   if $(type google-chrome >/dev/null 2>/dev/null); then
     GOOGLE_CHROME_VERION=$(google-chrome --version)
-    GOOGLE_CHROME_VERION_MAJOR=${GOOGLE_CHROME_VERION##Google Chrome}
+    GOOGLE_CHROME_VERION_MAJOR=${GOOGLE_CHROME_VERION##Google Chrome }
     GOOGLE_CHROME_VERION_MAJOR=${GOOGLE_CHROME_VERION_MAJOR%%.*}
     topic "Looking up latest chromedriver version using major version ${GOOGLE_CHROME_VERION_MAJOR}"
     LATEST="https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${GOOGLE_CHROME_VERION_MAJOR}"
