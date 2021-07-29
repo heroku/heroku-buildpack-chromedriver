@@ -28,7 +28,7 @@ mkdir -p $BIN_DIR
 if [ -f $ENV_DIR/CHROMEDRIVER_VERSION ]; then
   VERSION=$(cat $ENV_DIR/CHROMEDRIVER_VERSION)
 else
-  CHROME_BIN=$(ls "${BUILD_DIR}/.apt/opt/google/chrome/chrome" 2>/dev/null || ls "${HOME}/.apt/opt/google/chrome/chrome" 2>/dev/null || :)
+  CHROME_BIN=$(ls "${BUILD_DIR}/.apt/opt"/google/chrome*/chrome | sort | head -1 2>/dev/null || ls "${HOME}/.apt/opt"/google/chrome*/chrome | sort | head -1 2>/dev/null || :)
   if [[ ! -z ${CHROME_BIN} ]]; then
     GOOGLE_CHROME_VERION=$("${CHROME_BIN}" --product-version)
     GOOGLE_CHROME_VERION_MAJOR=${GOOGLE_CHROME_VERION%%.*}
