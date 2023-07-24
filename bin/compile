@@ -25,8 +25,11 @@ ENV_DIR=${3:-}
 BIN_DIR=$BUILD_DIR/.chromedriver/bin
 mkdir -p $BIN_DIR
 
+CHROME_BIN=$(ls "${BUILD_DIR}/.apt/opt"/google/chrome*/chrome | sort | head -1 2>/dev/null || ls "${HOME}/.apt/opt"/google/chrome*/chrome | sort | head -1 2>/dev/null || :)
+GOOGLE_CHROME_VERSION=$("${CHROME_BIN}" --product-version)
+
 topic "Downloading chromedriver"
-ZIP_URL="https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/$($GOOGLE_CHROME_BIN/google-chrome --version | cut -c15- | tr -d '[:blank:]')/linux64/chromedriver-linux64.zip"
+ZIP_URL="https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/$GOOGLE_CHROME_VERSION/linux64/chromedriver-linux64.zip"
 ZIP_LOCATION="/tmp/chromedriver.zip"
 curl -s -o $ZIP_LOCATION $ZIP_URL
 unzip -j -o $ZIP_LOCATION chromedriver-linux64/chromedriver -d $BIN_DIR
