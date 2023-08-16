@@ -35,7 +35,7 @@ fi
 indent "Version $VERSION"
 
 topic "Downloading chromedriver v$VERSION"
-ZIP_URL="https://chromedriver.storage.googleapis.com/$VERSION/chromedriver_linux64.zip"
+ZIP_URL="https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/116.0.5845.96/linux64/chromedriver-linux64.zip"
 ZIP_LOCATION="/tmp/chromedriver.zip"
 curl -s -o $ZIP_LOCATION $ZIP_URL
 unzip -o $ZIP_LOCATION -d $BIN_DIR
