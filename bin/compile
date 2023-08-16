@@ -29,8 +29,8 @@ if [ -f $ENV_DIR/CHROMEDRIVER_VERSION ]; then
   VERSION=$(cat $ENV_DIR/CHROMEDRIVER_VERSION)
 else
   topic "Looking up latest chromedriver version"
-  LATEST="https://chromedriver.storage.googleapis.com/LATEST_RELEASE"
-  VERSION=`curl -s $LATEST`
+  LATEST="https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions.json"
+  VERSION=$(curl -s $LATEST | jq -r '.channels.Stable.version')
 fi
 indent "Version $VERSION"
 
