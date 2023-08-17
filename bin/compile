@@ -30,7 +30,7 @@ if [ -f $ENV_DIR/CHROMEDRIVER_VERSION ]; then
 else
   topic "Looking up latest chromedriver version"
   LATEST="https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions.json"
-  VERSION=`curl -s $LATEST | grep -Eo '"channel":"Stable","version"[^,]*' | grep -Eo '[^:]*$' | tr -d '"'`
+  VERSION=`curl -s https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions.json | jq -r '.channels.Stable.version'
 fi
 indent "Version $VERSION"
 
