@@ -1,3 +1,4 @@
+- Update `unzip` step in `bin/compile` to remove superfluous directory from decompressed chromdriver path
 - Update Google's URL to reflect new location for chromedriver downloads
 - Remove Circle CI and add GitHub Action for simple CI
 - Make `bin/compile` executable
