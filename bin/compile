@@ -27,6 +27,7 @@ mkdir -p $BIN_DIR
 
 if [ -f $ENV_DIR/CHROMEDRIVER_VERSION ]; then
   VERSION=$(cat $ENV_DIR/CHROMEDRIVER_VERSION)
+  topic "Using chromedriver v${VERSION} (set by the env var 'CHROMEDRIVER_VERSION')"
 else
   topic "Looking up latest chromedriver version"
   LATEST="https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions.json"
