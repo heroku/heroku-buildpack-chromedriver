@@ -1,7 +1,7 @@
 # heroku-buildpack-chromedriver
 
 This buildpack installs
-[`chromedriver`](https://sites.google.com/chromium.org/driver/)
+[`chromedriver`](https://chromedriver.chromium.org/)
  (the Selenium driver for Chrome) in a Heroku slug.
  
  This buildpack only installs the `chromedriver` binary. To use Selenium with Chrome
