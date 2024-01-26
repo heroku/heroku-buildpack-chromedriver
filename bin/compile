@@ -1,13 +1,26 @@
 #!/usr/bin/env bash
 # bin/compile <build-dir> <cache-dir> <env-dir>
 
-set -o errexit
+# fail fast
+set -e
 set -o pipefail
-set -o nounset
-unset GIT_DIR
+
+# debug
+# set -x
+
+# parse and derive params
+BUILD_DIR=$1
+CACHE_DIR=$2
+ENV_DIR=$3
+BUILDPACK_DIR="$(cd "$(dirname "$0")"; cd ..; pwd)"
+
+function error() {
+  echo " !     $*" >&2
+  exit 1
+}
 
 function topic() {
-  echo "-----> $*..."
+  echo "-----> $*"
 }
 
 function indent() {
@@ -18,32 +31,47 @@ function indent() {
   esac
 }
 
-BUILD_DIR=${1:-}
-CACHE_DIR=${2:-}
-ENV_DIR=${3:-}
+topic "Installing Chrome for Testing"
 
-BIN_DIR=$BUILD_DIR/.chromedriver/bin
-mkdir -p $BIN_DIR
+INSTALL_DIR="$BUILD_DIR/.chrome-for-testing"
+BIN_DIR="$INSTALL_DIR/bin"
+mkdir -p "$BIN_DIR"
 
-if [ -f $ENV_DIR/CHROMEDRIVER_VERSION ]; then
-  VERSION=$(cat $ENV_DIR/CHROMEDRIVER_VERSION)
-  topic "Using chromedriver v${VERSION} (set by the env var 'CHROMEDRIVER_VERSION')"
+# Detect requested channel or default to stable
+if [ -f "$ENV_DIR/GOOGLE_CHROME_CHANNEL" ]; then
+  channel=$(cat "$ENV_DIR/GOOGLE_CHROME_CHANNEL")
+  echo "Using env var GOOGLE_CHROME_CHANNEL=$channel" | indent
 else
-  topic "Looking up latest chromedriver version"
-  LATEST="https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions.json"
-  VERSION=$(curl --silent --show-error --fail --retry 3 --retry-connrefused --connect-timeout 10 "${LATEST}" | jq -r '.channels.Stable.version')
+  channel=stable
 fi
-indent "Version $VERSION"
+# The current version endpoint requires ALL CAPS.
+CHANNEL="$(echo -n "$channel" | awk '{ print toupper($0) }')"
+VERSION="$(curl --silent --show-error --fail --retry 3 --retry-connrefused --connect-timeout 10 "https://googlechromelabs.github.io/chrome-for-testing/LATEST_RELEASE_$CHANNEL")"
+echo "Resolved $CHANNEL version $VERSION" | indent
 
-topic "Downloading chromedriver v$VERSION"
+echo "Downloading Chrome" | indent
+ZIP_URL="https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/$VERSION/linux64/chrome-linux64.zip"
+ZIP_LOCATION="$INSTALL_DIR/chrome.zip"
+curl --silent --show-error --fail --retry 3 --retry-connrefused --connect-timeout 10 -o "${ZIP_LOCATION}" "${ZIP_URL}" | indent
+unzip -q -j -o "$ZIP_LOCATION" -d "$BIN_DIR" | indent
+rm -f "$ZIP_LOCATION"
+
+echo "Downloading Chromedriver" | indent
 ZIP_URL="https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/$VERSION/linux64/chromedriver-linux64.zip"
-ZIP_LOCATION="/tmp/chromedriver.zip"
-curl --silent --show-error --fail --retry 3 --retry-connrefused --connect-timeout 10 -o "${ZIP_LOCATION}" "${ZIP_URL}"
-unzip -j -o $ZIP_LOCATION -d $BIN_DIR
-rm -f $ZIP_LOCATION
-indent "Downloaded"
+ZIP_LOCATION="$INSTALL_DIR/chromedriver.zip"
+curl --silent --show-error --fail --retry 3 --retry-connrefused --connect-timeout 10 -o "${ZIP_LOCATION}" "${ZIP_URL}" | indent
+unzip -q -j -o "$ZIP_LOCATION" -d "$BIN_DIR" | indent
+rm -f "$ZIP_LOCATION"
 
-topic "Creating chromedriver export scripts"
-mkdir -p $BUILD_DIR/.profile.d
-echo "export PATH=\$PATH:\$HOME/.chromedriver/bin" >> $BUILD_DIR/.profile.d/chromedriver.sh
-indent "Created"
+source "$BUILDPACK_DIR/bin/install-chrome-dependencies"
+
+echo "Adding executables to PATH" | indent
+mkdir -p "$BUILD_DIR/.profile.d"
+echo "export PATH=\$HOME/.chrome-for-testing/bin:\$PATH" >> "$BUILD_DIR/.profile.d/chrome-for-testing.sh"
+
+# Verify the executables are actually present
+export PATH="$BUILD_DIR/.chrome-for-testing/bin:$PATH"
+which chrome | indent
+which chromedriver | indent
+
+echo "Installed Chrome for Testing $CHANNEL version $VERSION" | indent

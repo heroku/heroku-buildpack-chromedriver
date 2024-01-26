@@ -1,3 +1,4 @@
+- Replace with installation of [Chrome for Testing](https://chromedriver.chromium.org/downloads/version-selection), so that Chrome & chromedriver versions are in-sync
 - Explain the source of the chromedriver version in the build log when `CHROMEDRIVER_VERSION` is set
 - Improve error message for download errors
 - Update `unzip` step in `bin/compile` to remove superfluous directory from decompressed chromedriver path

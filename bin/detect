@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 # bin/detect <build-dir>
 
-echo "chromedriver"
+echo "Chrome for Testing"
 exit 0
