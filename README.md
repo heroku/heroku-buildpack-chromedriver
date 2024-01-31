@@ -9,7 +9,7 @@ By default, this buildpack will download the latest `Stable` release, which is p
 by [Google](https://googlechromelabs.github.io/chrome-for-testing/).
 
 You can control the channel of the release by setting the `GOOGLE_CHROME_CHANNEL`
-config variable to `Stable`, `Beta`, `Dev`, or `Canary`, and the deploy/build the app.
+config variable to `Stable`, `Beta`, `Dev`, or `Canary`, and then deploy/build the app.
 
 Chrome is "evergreen", so they do not support downloading specific versions, 
 but instead the latest from any of these channels.
