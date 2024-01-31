@@ -37,6 +37,16 @@ INSTALL_DIR="$BUILD_DIR/.chrome-for-testing"
 BIN_DIR="$INSTALL_DIR/bin"
 mkdir -p "$BIN_DIR"
 
+# Detect if the old config var is still used
+if [ -f "$ENV_DIR/CHROMEDRIVER_VERSION" ]; then
+  error "This buildpack no longer supports CHROMEDRIVER_VERSION config var and must be removed to continue, because this buildpack now installs compatible versions of Chrome & Chromedriver. GOOGLE_CHROME_CHANNEL can be used to set Stable (default), Beta, Dev, or Canary."
+fi
+
+# Detect if Chrome is already installed
+if which chrome; then
+  error "Chrome is already installed. This buildpack now install a compatible version of Chrome. Please, remove the other Chrome installation."
+fi
+
 # Detect requested channel or default to stable
 if [ -f "$ENV_DIR/GOOGLE_CHROME_CHANNEL" ]; then
   channel=$(cat "$ENV_DIR/GOOGLE_CHROME_CHANNEL")
