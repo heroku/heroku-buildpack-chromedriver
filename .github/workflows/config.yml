@@ -11,3 +11,5 @@ jobs:
 
     - name: Run Buildpack Compile
       run:  ./bin/compile . . .
+      env:
+        STACK: heroku-22
