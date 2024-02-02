@@ -44,7 +44,7 @@ fi
 
 # Detect if Chrome is already installed
 if which chrome; then
-  error "Chrome is already installed. This buildpack now install a compatible version of Chrome. Please, remove the other Chrome installation."
+  error "Chrome is already installed. This buildpack now installs a compatible version of Chrome. Please, remove the other Chrome installation. Chrome may have been installed by another buildpack (such as heroku/heroku-buildpack-google-chrome buildpack), which should no longer be used with this buildpack."
 fi
 
 # Detect requested channel or default to stable
