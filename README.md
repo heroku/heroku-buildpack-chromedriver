@@ -1,5 +1,14 @@
 # heroku-buildpack-chromedriver
 
+> [!CAUTION]
+> This buildpack should no longer be used. The Chromedriver version falls out of sync with Chrome (installed by a different buildpack) causing build failures.
+> 
+> **Instead, please use [Chrome for Testing buildpack](https://github.com/heroku/heroku-buildpack-chrome-for-testing)**, which installs  [matching Chrome + Chromedriver versions](https://googlechromelabs.github.io/chrome-for-testing/).
+
+-----
+
+# Original README
+
 This buildpack installs
 [`chromedriver`](https://chromedriver.chromium.org/)
  (the Selenium driver for Chrome) in a Heroku slug.
