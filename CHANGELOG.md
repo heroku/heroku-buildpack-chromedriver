@@ -1,3 +1,4 @@
+- End-of-life: redirect developers to Chrome for Testing buildpack
 - Explain the source of the chromedriver version in the build log when `CHROMEDRIVER_VERSION` is set
 - Improve error message for download errors
 - Update `unzip` step in `bin/compile` to remove superfluous directory from decompressed chromedriver path
