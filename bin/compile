@@ -18,6 +18,34 @@ function indent() {
   esac
 }
 
+ANSI_RED="\033[1;31m"
+ANSI_RESET="\033[0m"
+
+function display_error() {
+  echo >&2
+  # We have to ANSI wrap each line separately to prevent breakage if line prefixes are added
+  # later (such as when the builder is untrusted, or when Git adds the "remote:" prefix).
+  while IFS= read -r line; do
+    echo -e "${ANSI_RED}${line}${ANSI_RESET}" >&2
+  done <<< "${1}"
+  echo >&2
+}
+
+display_error "$(cat <<'EOF'
+#######################################################################
+
+WARNING: The Chromedriver buildpack should no longer be used. The 
+installed version falls out of sync with Chrome (installed by a 
+different buildpack) causing build failures.
+
+Instead, please use "Chrome for Testing" buildpack, 
+https://github.com/heroku/heroku-buildpack-chrome-for-testing
+which installs matching Chrome + Chromedriver versions.
+
+#######################################################################
+EOF
+)"
+
 BUILD_DIR=${1:-}
 CACHE_DIR=${2:-}
 ENV_DIR=${3:-}
